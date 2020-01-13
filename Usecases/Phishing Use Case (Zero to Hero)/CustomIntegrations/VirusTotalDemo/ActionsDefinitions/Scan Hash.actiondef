@@ -1,0 +1,55 @@
+{
+  "Name": "Scan Hash",
+  "Description": "Scan Hash via VirusTotal. *Mark entity as suspicious and show insights if risk score matches a given threshold.",
+  "Script": "from SiemplifyUtils import output_handler\nfrom SiemplifyDataModel import EntityTypes\nfrom VirusTotal import VirusTotalManager, FILEHASH_TYPE, ScanStatus, ENTITY_TASK_ID_KEY, ENTITY_REPORT_KEY, ENTITY_STATUS_KEY\nfrom SiemplifyAction import SiemplifyAction\nfrom ScriptResult import EXECUTION_STATE_COMPLETED, EXECUTION_STATE_INPROGRESS\nfrom SiemplifyUtils import add_prefix_to_dict, convert_dict_to_json_result_dict\nimport json\nimport sys\n\n\"\"\"\nstructure\nentities_handle = {{\"entitiy_id\":\n                 {\"report\": {\"report/None\"},\n                  \"task_id\": \"id/None\",\n                  \"status\": \"missing/done/ready\"}\n             }, }\n\"\"\"\n\nVT_PREFIX = \"VT\"\nACTION_NAME = \"VirusTotal_ScanHash\"\nPROVIDER = \"VirusTotal\"\n\n\ndef get_entity_by_identifier(entities, identifier):\n    for entity in entities:\n        if entity.identifier.lower() == identifier.lower():\n            return entity\n\n\ndef add_siemplify_results(siemplify, vt_instance, entity, report, threshold):\n    is_risky = False\n    entity.additional_properties.update(add_prefix_to_dict(vt_instance.build_hash_enrichment(report),\n                                                           VT_PREFIX))\n    entity.is_enriched = True\n\n    entity_table = vt_instance.build_engine_csv(report['scans'])\n    siemplify.result.add_entity_table(entity.identifier, entity_table)\n\n    web_link = report.get('permalink', 'No permalink found in results.')\n    siemplify.result.add_entity_link(entity.identifier, web_link)\n\n    if int(threshold) <= report.get('positives', 0):\n        is_risky = True\n        entity.is_suspicious = True\n\n        insight_msg = 'VirusTotal - Hash was marked as malicious by {0} of {1} engines. Threshold set to - {2}'.format(\n            report.get('positives'), report.get('total'), threshold)\n\n        siemplify.add_entity_insight(entity, insight_msg, triggered_by='VirusTotal')\n\n    return is_risky\n\n\n@output_handler\ndef main():\n    siemplify = SiemplifyAction()\n    siemplify.script_name = ACTION_NAME\n    #conf = siemplify.get_configuration(IDENTIFIER)\n    #pi_key = conf['Api Key']\n    api_key = \"f6d290c8f2d0c4d887a42449efdaf9eb37b13cf8fbc041814d789647ae5cc1f3\"\n    use_ssl = True\n    vt = VirusTotalManager(api_key, use_ssl)\n    rescan_after_days = int(siemplify.parameters.get('Rescan after days')) if siemplify.parameters.get('Rescan after days') else None\n\n    entities_handle = {}\n    output_message = \"\"\n    siemplify.LOGGER.info(\"Action START\")\n\n    for entity in siemplify.target_entities:\n        if entity.entity_type == EntityTypes.FILEHASH:\n            try:\n                # Search a file hash in virusTotal\n                entities_handle.update(vt.define_resource_status(entity.identifier, FILEHASH_TYPE, rescan_after_days))\n\n            except Exception as err:\n                error_message = 'Error fetching report for entity {0}, Error: {1}'.format(\n                    entity.identifier,\n                    err.message\n                )\n                siemplify.LOGGER.error(error_message)\n                siemplify.LOGGER.exception(err)\n\n    siemplify.LOGGER.info(\"Sync Part END !!!\")\n    siemplify.end(output_message, json.dumps(entities_handle), EXECUTION_STATE_INPROGRESS)\n\n\ndef fetch_scan_report_async():\n    siemplify = SiemplifyAction()\n    siemplify.script_name = ACTION_NAME\n    siemplify.LOGGER.info(\"ASync Part START !!!\")\n    conf = siemplify.get_configuration(PROVIDER)\n    api_key = conf.get('Api Key')\n    use_ssl = conf.get('Verify SSL').lower() == 'true'\n    vt = VirusTotalManager(api_key, use_ssl)\n\n    # Extract entities_handle\n    # {entity.identifier: {\"Report\": {}, \"Task ID\": None, \"Status\": \"Missing/done\"}}\n    entities_handle = json.loads(siemplify.parameters[\"additional_data\"])\n    threshold = siemplify.parameters.get('Threshold', 3)\n    json_results = {}\n    entities_to_enrich = []\n    output_message = \"\"\n    errors_flag = False\n    is_risky = False\n\n    for entity_identifier, entity_handle in entities_handle.items():\n        task_id = entity_handle.get(ENTITY_TASK_ID_KEY)\n\n        try:\n            if task_id and entity_handle.get(ENTITY_STATUS_KEY) == ScanStatus.QUEUED:\n                # check if analysis completed\n                entity_report = vt.is_scan_report_ready(task_id, FILEHASH_TYPE)\n                if entity_report:\n                    # is_ready = True, fetch the report\n                    entity_handle[ENTITY_STATUS_KEY] = ScanStatus.DONE\n                    entity_handle[ENTITY_REPORT_KEY] = entity_report\n\n        except Exception as err:\n            error_message = 'Error Rescan {0} with task ID {1}, Error: {2}'.format(\n                entity_identifier, task_id, err.message)\n            siemplify.LOGGER.error(error_message)\n            siemplify.LOGGER.exception(err)\n            errors_flag = True\n\n    # Flag to determine the async action status - continue, end\n    is_queued_items = False\n    for entity_identifier, entity_handle in entities_handle.items():\n        if entity_handle[ENTITY_STATUS_KEY] == ScanStatus.QUEUED:\n            is_queued_items = True\n\n    if is_queued_items:\n        siemplify.LOGGER.info(\"Continuing...the requested items are still queued for analysis\")\n        siemplify.end(output_message, json.dumps(entities_handle), EXECUTION_STATE_INPROGRESS)\n\n    # Action END\n    else:\n        missing_hashes = []\n        report_hashes = []\n        rescan_hashes = []\n\n        for entity_identifier, entity_handle in entities_handle.items():\n            if entity_handle.get(ENTITY_STATUS_KEY) == ScanStatus.DONE and entity_handle.get(ENTITY_REPORT_KEY):\n                if entity_handle.get(ENTITY_TASK_ID_KEY):\n                    rescan_hashes.append(entity_identifier)\n                else:\n                    report_hashes.append(entity_identifier)\n\n                # Report enrichment & data table\n                json_results[entity_identifier] = entity_handle.get(ENTITY_REPORT_KEY)\n                entity = get_entity_by_identifier(siemplify.target_entities, entity_identifier)\n                try:\n                    # Fetch report\n                    is_risky_entity = add_siemplify_results(siemplify, vt, entity, entity_handle.get(ENTITY_REPORT_KEY), threshold)\n                    if is_risky_entity:\n                        is_risky = True\n                    entities_to_enrich.append(entity)\n                except Exception as err:\n                    error_message = 'Error on hash {0}: {1}.'.format(\n                        entity_identifier,\n                        err.message\n                    )\n                    siemplify.LOGGER.error(error_message)\n                    siemplify.LOGGER.exception(err)\n                    errors_flag = True\n\n            else:\n                missing_hashes.append(entity_identifier)\n\n        if report_hashes:\n            # Fetch report handle\n            output_message += \"Reports were fetched for the following hashes: \\n{0}\\n\".format(\",\".join(report_hashes))\n\n        if rescan_hashes:\n            # Rescan handle\n            output_message += \"Rescan the following hashes: \\n{0}\\n\".format(\",\".join(rescan_hashes))\n\n        if missing_hashes:\n            # Missing hash handle\n            output_message += \"The following hashes does not exist on VirustTotal (file was never scanned before): \" \\\n                              \"{0}\\n\".format(\",\".join(missing_hashes))\n\n        if errors_flag:\n            output_message += \"\\n\\n Errors occurred, check log for more information\"\n\n        siemplify.LOGGER.info(\"Action END !!!\")\n        siemplify.update_entities(entities_to_enrich)\n        siemplify.result.add_result_json(convert_dict_to_json_result_dict(json_results))\n        siemplify.end(output_message, is_risky, EXECUTION_STATE_COMPLETED)\n\n\nif __name__ == \"__main__\":\n    if len(sys.argv) < 3 or sys.argv[2] == 'True':\n        main()\n    else:\n        fetch_scan_report_async()\n",
+  "IntegrationIdentifier": "VirusTotalDemo",
+  "ScriptResultName": "is_risky",
+  "DynamicResultsMetadata": [
+    {
+      "ResultName": "JsonResult",
+      "ResultExample": "[{\"EntityResult\": {\"permalink\": \"https://www.virustotal.com/file/275a021bbfb6489e54d471899f7db9d1663fc695ec2fe2a2c4538aabf651fd0f/analysis/1549381312/\", \"sha1\": \"3395856ce81f2b7382dee72602f798b642f14140\", \"resource\": \"275A021BBFB6489E54D471899F7DB9D1663FC695EC2FE2A2C4538AABF651FD0F\", \"response_code\": 1, \"scan_date\": \"2019-02-05 15:41:52\", \"scan_id\": \"275a021bbfb6489e54d471899f7db9d1663fc695ec2fe2a2c4538aabf651fd0f-1549381312\", \"verbose_msg\": \"Scan finished, information embedded\", \"total\": 60, \"positives\": 54, \"sha256\": \"275a021bbfb6489e54d471899f7db9d1663fc695ec2fe2a2c4538aabf651fd0f\", \"md5\": \"44d88612fea8a8f36de82e1278abb02f\", \"scans\": {\"Bkav\": {\"detected\": true, \"version\": \"1.1.1.1\", \"result\": \"DOS.EiracA.Trojan\", \"update\": \"20190201\"}, \"MicroWorld-eScan\": {\"detected\": true, \"version\": \"14.0.297.0\", \"result\": \"EICAR-Test-File\", \"update\": \"20190205\"}}}, \"Entity\": \"275A021BBFB6489E54D471899F7DB9D1663FC695EC2FE2A2C4538AABF651FD0F\"}]",
+      "ShowResult": true
+    }
+  ],
+  "Creator": "System",
+  "IsEnabled": true,
+  "IsCustom": true,
+  "IsSystem": false,
+  "Version": 8.0,
+  "TimeoutSeconds": 600,
+  "Parameters": [
+    {
+      "CustomActionId": 0,
+      "IsMandatory": true,
+      "DefaultValue": "",
+      "Description": null,
+      "Name": "Threshold",
+      "Value": "",
+      "Type": 0,
+      "OptionalValues": null,
+      "OptionalValuesJson": null,
+      "Id": 0,
+      "CreationTimeUnixTimeInMs": 1578484874605,
+      "ModificationTimeUnixTimeInMs": 1578484874605
+    },
+    {
+      "CustomActionId": 0,
+      "IsMandatory": false,
+      "DefaultValue": "",
+      "Description": null,
+      "Name": "Rescan after days",
+      "Value": "",
+      "Type": 0,
+      "OptionalValues": null,
+      "OptionalValuesJson": null,
+      "Id": 0,
+      "CreationTimeUnixTimeInMs": 1578484874605,
+      "ModificationTimeUnixTimeInMs": 1578484874605
+    }
+  ],
+  "DefaultResultValue": null,
+  "PythonVersion": "None",
+  "Id": 0,
+  "CreationTimeUnixTimeInMs": 1578484874591,
+  "ModificationTimeUnixTimeInMs": 1578484874593
+}

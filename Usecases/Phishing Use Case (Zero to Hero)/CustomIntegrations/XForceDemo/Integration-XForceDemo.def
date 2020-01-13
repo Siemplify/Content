@@ -1,0 +1,40 @@
+{
+  "IsAvailableForCommunity": false,
+  "Identifier": "XForceDemo",
+  "ShouldInstalledInSystem": false,
+  "Version": 9.0,
+  "DisplayName": "XForceDemo",
+  "Description": "X-Force - Deep security research expertise and global threat intelligence for enhanced security solutions",
+  "ImageBase64": "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",
+  "SvgImage": "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<!-- Generator: Adobe Illustrator 22.0.1, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->\n<svg version=\"1.1\" id=\"Layer_1\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" x=\"0px\" y=\"0px\"\n\t viewBox=\"0 0 25 25\" style=\"enable-background:new 0 0 25 25;\" xml:space=\"preserve\">\n<line x1=\"57.8\" y1=\"-4\" x2=\"76.5\" y2=\"-6.6\"/>\n<g>\n\t<g>\n\t\t<path d=\"M12.5,12.3l-2.7,3.1H5.1v1.1c0,0,1.5,3.7,7.4,6.2h0.1c5.9-2.6,7.4-6.2,7.4-6.2v-1.1h-4.7L12.5,12.3z M12.6,2.3h-0.3\n\t\t\tl-7.3,1v10.3h4l2.3-2.7L8.3,7.4l1.3-1.1l3,3.4l3-3.4l1.3,1.1L13.6,11l2.3,2.7h4V3.4L12.6,2.3z\"/>\n\t</g>\n</g>\n</svg>\n",
+  "IsCustom": true,
+  "PythonVersion": 1,
+  "IntegrationProperties": [],
+  "IntegrationSupportedActions": [
+    {
+      "Name": "Ping",
+      "Description": "Test Connectivity to XForce",
+      "Id": 0,
+      "CreationTimeUnixTimeInMs": 1578817245275,
+      "ModificationTimeUnixTimeInMs": 1578817245275
+    },
+    {
+      "Name": "Get Url Info",
+      "Description": "Query XForce for URL information",
+      "Id": 0,
+      "CreationTimeUnixTimeInMs": 1578817245275,
+      "ModificationTimeUnixTimeInMs": 1578817245275
+    },
+    {
+      "Name": "Get Hash Info",
+      "Description": "Query XForce for hash information",
+      "Id": 0,
+      "CreationTimeUnixTimeInMs": 1578817245275,
+      "ModificationTimeUnixTimeInMs": 1578817245275
+    }
+  ],
+  "Documentation": null,
+  "Id": 0,
+  "CreationTimeUnixTimeInMs": 1577894585218,
+  "ModificationTimeUnixTimeInMs": 1577894585218
+}

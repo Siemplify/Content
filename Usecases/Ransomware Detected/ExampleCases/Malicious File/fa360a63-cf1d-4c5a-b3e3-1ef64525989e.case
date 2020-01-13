@@ -1,0 +1,54 @@
+{
+  "Cases": [
+    {
+      "Events": [
+        {
+          "_fields": {
+            "BaseEventIds": [],
+            "ParentEventId": 0,
+            "DeviceEventClassId": "Malicious file",
+            "StartTime": "1578583882750",
+            "EndTime": "1578583882750",
+            "DeviceProduct": "EDR"
+          },
+          "_rawDataFields": {
+            "version information": "Language: U.S. English Company Name: Microsoft Corporation File Description: Microsoft MediaPlayer File Version: 12.6.7600.16385 Legal Copyright: Microsoft Corporation. All rights reserved. Original Filename: MSTCSS.EXE Product Name: Microsoft Windows Operating System Product Version: 15.3.7600.16385",
+            "DeviceProduct": "EDR",
+            "Name": "Malicious file discovered",
+            "SHA256": "595A54F0BBF297041CE259461AE8A12F37FB29E5180705EAFB3668B4A491CECC",
+            "file type": "PE32+ executable (GUI) x86-64, for MS Windows",
+            "size": "107,008 bytes",
+            "Compile Timestamp": "Tuesday, May 29, 2018 13:07:05 UTC",
+            "PDB Path": "f:\\w\\xmrig\\iskander\\x64\\release\\iskander.pdb",
+            "hostname": "Vasya",
+            "username": "Kesha",
+            "DeviceEventClassId": "Malicious file discovered"
+          },
+          "Environment": null,
+          "SourceSystemName": null
+        }
+      ],
+      "Environment": null,
+      "SourceSystemName": "Malicious File discovered",
+      "TicketId": null,
+      "Description": null,
+      "DisplayId": null,
+      "Reason": null,
+      "Name": "Malicious File",
+      "DeviceVendor": "EDR",
+      "DeviceProduct": "EDR",
+      "StartTime": 1578583882750,
+      "EndTime": 1578583882750,
+      "IsTestCase": false,
+      "Priority": 0,
+      "RuleGenerator": "Malicious file",
+      "SourceGroupingIdentifier": null,
+      "PlaybookTriggerKeywords": [],
+      "Extensions": [],
+      "Attachments": null
+    }
+  ],
+  "IsTestCase": false,
+  "DebugOutput": null,
+  "ConnectorIdentifier": null
+}

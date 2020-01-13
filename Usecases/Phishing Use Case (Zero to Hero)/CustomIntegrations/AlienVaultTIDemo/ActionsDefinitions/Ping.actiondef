@@ -1,0 +1,26 @@
+{
+  "Name": "Ping",
+  "Description": "Test Connectivity",
+  "Script": "from SiemplifyUtils import output_handler\nfrom SiemplifyDataModel import EntityTypes\n# Imports\nfrom SiemplifyAction import SiemplifyAction\nfrom AlienVaultTIManager import AlienVaultTIManager\n\n\n@output_handler\ndef main():\n    siemplify = SiemplifyAction()\n\n    # Configuration.\n    #conf = siemplify.get_configuration('AlienVaultTI')\n    #api_key = conf['Api Key']\n    api_key = \"4ec3af1186c8c80e033899a9912a36d4e9838e80dfba63c1000a70edb202ccba\"\n    alienvault = AlienVaultTIManager(api_key)\n\n    # Execute Test Connectivity.\n    result = alienvault.test_connectivity()\n\n    if result:\n        output_message = \"Connection Established.\"\n    else:\n        output_message = 'Connection Failed.'\n\n    siemplify.end(output_message, result)\n\n\nif __name__ == '__main__':\n    main()\n",
+  "IntegrationIdentifier": "AlienVaultTIDemo",
+  "ScriptResultName": "is_success",
+  "DynamicResultsMetadata": [
+    {
+      "ResultName": "JsonResult",
+      "ResultExample": null,
+      "ShowResult": true
+    }
+  ],
+  "Creator": "admin",
+  "IsEnabled": true,
+  "IsCustom": true,
+  "IsSystem": false,
+  "Version": 1.0,
+  "TimeoutSeconds": 600,
+  "Parameters": [],
+  "DefaultResultValue": null,
+  "PythonVersion": "None",
+  "Id": 0,
+  "CreationTimeUnixTimeInMs": 1577893930449,
+  "ModificationTimeUnixTimeInMs": 1577893930449
+}

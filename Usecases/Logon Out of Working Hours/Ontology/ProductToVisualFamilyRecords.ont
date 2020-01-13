@@ -1,0 +1,12 @@
+[
+  {
+    "Product": "Windows",
+    "EventName": "Out of Working Hours Login",
+    "ComparisonType": 0,
+    "VisualFamily": "Login",
+    "ForMigration": false,
+    "Id": 164,
+    "CreationTimeUnixTimeInMs": 1578841745006,
+    "ModificationTimeUnixTimeInMs": 1578841745006
+  }
+]

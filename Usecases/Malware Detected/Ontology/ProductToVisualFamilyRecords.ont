@@ -1,0 +1,12 @@
+[
+  {
+    "Product": "EDR",
+    "EventName": "Malicious file",
+    "ComparisonType": 0,
+    "VisualFamily": "EDR",
+    "ForMigration": false,
+    "Id": 398,
+    "CreationTimeUnixTimeInMs": 1578517622454,
+    "ModificationTimeUnixTimeInMs": 1578517622454
+  }
+]

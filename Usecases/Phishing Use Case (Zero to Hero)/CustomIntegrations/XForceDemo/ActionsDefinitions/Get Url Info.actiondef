@@ -1,0 +1,41 @@
+{
+  "Name": "Get Url Info",
+  "Description": "Query XForce for URL information",
+  "Script": "from SiemplifyUtils import output_handler\nfrom SiemplifyDataModel import EntityTypes\nfrom SiemplifyAction import SiemplifyAction\nfrom SiemplifyUtils import add_prefix_to_dict_keys, construct_csv, convert_dict_to_json_result_dict\nfrom XForceManager import XForceManager, XForceNotFoundError, XForceAccessDeniedError\nimport json\n\nURL = EntityTypes.URL\nSCRIPT_NAME = \"IBM XForce - Get Url Info\"\n\n\n@output_handler\ndef main():\n    siemplify = SiemplifyAction()\n    siemplify.script_name = SCRIPT_NAME\n\n    #conf = siemplify.get_configuration('XForce')\n    #address = conf['Address']\n    #api_key = conf['Api Key']\n    #api_password = conf['Api Password']\n    #verify_ssl = conf['Verify SSL'].lower() == 'true'\n    address = \"https://api.xforce.ibmcloud.com\"\n    api_key = \"916023e4-3402-4a39-a46c-a2256240b4bd\"\n    api_password = \"373ed111-da6e-4c13-98d5-abb0a4ed8251\"\n    verify_ssl = True\n\n    xf_manager = XForceManager(api_key, api_password, address, verify_ssl=verify_ssl)\n    threshold = int(siemplify.parameters.get('Threshold')) if siemplify.parameters.get('Threshold') else 1\n\n    risk_score = 0\n    enriched_entities = []\n    csv_results = []\n    entities_with_score = {}\n    output_message = ''\n    is_risk = 'false'\n    json_results = {}\n\n    not_found_entities = []\n    access_denied = []\n    not_enriched_entities = []\n\n    for entity in siemplify.target_entities:\n        if entity.entity_type == URL:\n            try:\n                report = xf_manager.get_url_info(entity.identifier)\n                if report:\n                    json_results[entity.identifier] = report\n                    risk_score = report.get('result').get('score') or 0\n                    categories_list = report.get('result', {}).get('categoryDescriptions', {}).keys() or []\n                    categories = '| '.join(str(category) for category in categories_list)\n\n                    # Attach report\n                    siemplify.result.add_entity_json(entity.identifier, json.dumps(report))\n\n                    # Build csv table (URL - Score - Categories(comma separated))\n                    csv_results.append({\"URL\": entity.identifier, \"Score\": float(risk_score), \"Categories\": categories})\n\n                    # Enrich - Score and Categories (comma separated)\n                    flat_report = add_prefix_to_dict_keys({\"Score\": float(risk_score), \"Categories\": categories}, \"IBM_XForce\")\n                    entity.additional_properties.update(flat_report)\n                    entity.is_enriched = True\n\n                    # Add Insight and mark as suspicious if risk score exceed threshold\n                    if int(threshold) < risk_score:\n                        entity.is_suspicious = True\n                        is_risk = True\n                        insight_msg = 'IBM XForce - {0} marked as suspicious'.format(entity.identifier)\n                        siemplify.add_entity_insight(entity, insight_msg, triggered_by='XForce')\n\n                    entities_with_score.update({entity.identifier: risk_score})\n                    enriched_entities.append(entity)\n\n            except XForceNotFoundError as e:\n                siemplify.LOGGER.error(\"An error occurred on entity: {}.\\n{}.\".format(entity.identifier, str(e)))\n                siemplify.LOGGER.exception(e)\n                not_found_entities.append(entity.identifier)\n\n            except XForceAccessDeniedError as e:\n                siemplify.LOGGER.error(\"An error occurred on entity: {}.\\n{}.\".format(entity.identifier, str(e)))\n                siemplify.LOGGER.exception(e)\n                access_denied.append(entity.identifier)\n\n            except Exception as e:\n                # An error occurred - skip entity and continue\n                siemplify.LOGGER.error(\"An error occurred on entity: {}.\\n{}.\".format(entity.identifier, str(e)))\n                siemplify.LOGGER.exception(e)\n                not_enriched_entities.append(entity.identifier)\n\n    if csv_results:\n        # Add csv table\n        siemplify.result.add_data_table(\"Report\", construct_csv(csv_results))\n\n    if entities_with_score:\n        output_message = \"The following entities were enriched \\n\"\n        for url, score in entities_with_score.items():\n            output_message = '{0} {1} returned risk score: {2} \\n'.format(output_message, url, score)\n        siemplify.update_entities(enriched_entities)\n\n    if not_found_entities:\n        output_message += \"The following entities were not found in IBM X-Force: {0} \\n\".format('\\n'.join(not_found_entities))\n\n    if access_denied:\n        output_message += \"The following entities were not enriched - Access was denied: {0} \\n\".format('\\n'.join(access_denied))\n\n    if not_enriched_entities:\n        output_message += \"The following entities were not enriched - API error: {0} \\n\".format('\\n'.join(not_enriched_entities))\n\n    siemplify.result.add_result_json(convert_dict_to_json_result_dict(json_results))\n    siemplify.end(output_message, is_risk)\n\n\nif __name__ == \"__main__\":\n    main()\n",
+  "IntegrationIdentifier": "XForceDemo",
+  "ScriptResultName": "is_risk",
+  "DynamicResultsMetadata": [
+    {
+      "ResultName": "JsonResult",
+      "ResultExample": "[{\"EntityResult\": {\"associated\": [{\"url\": \"markossolomon.com\", \"cats\": {}, \"score\": null, \"categoryDescriptions\": {}}], \"result\": {\"url\": \"markossolomon.com/f1q7qx.php\", \"cats\": {\"Botnet Command and Control Server\": true}, \"score\": 10, \"categoryDescriptions\": {\"Botnet Command and Control Server\": \"This category contains Web sites or domains that host a botnet command and control server.\"}}, \"tags\": []}, \"Entity\": \"HTTP://MARKOSSOLOMON.COM/F1Q7QX.PHP\"}]",
+      "ShowResult": true
+    }
+  ],
+  "Creator": "admin",
+  "IsEnabled": true,
+  "IsCustom": true,
+  "IsSystem": false,
+  "Version": 1.0,
+  "TimeoutSeconds": 600,
+  "Parameters": [
+    {
+      "CustomActionId": 0,
+      "IsMandatory": false,
+      "DefaultValue": "1",
+      "Description": null,
+      "Name": "Threshold",
+      "Value": "1",
+      "Type": 0,
+      "OptionalValues": null,
+      "OptionalValuesJson": null,
+      "Id": 0,
+      "CreationTimeUnixTimeInMs": 1577894585261,
+      "ModificationTimeUnixTimeInMs": 1577894585261
+    }
+  ],
+  "DefaultResultValue": null,
+  "PythonVersion": "None",
+  "Id": 0,
+  "CreationTimeUnixTimeInMs": 1577894585254,
+  "ModificationTimeUnixTimeInMs": 1577894585254
+}
