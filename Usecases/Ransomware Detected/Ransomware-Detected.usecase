@@ -1,5 +1,6 @@
 {
   "Identifier": "fbe7f947-225f-4b53-ab19-185c5fcd5a44",
+  "Order": 1,
   "CreationTimeInUnixtime": "1578585440883",
   "Name": "Ransomware Detected",
   "Description": "This Use Case processes malicious content that has been identified as ransomware. It blocks the file right away and then further checks validity of the file by running into 3 stages and 3 Tiers.",

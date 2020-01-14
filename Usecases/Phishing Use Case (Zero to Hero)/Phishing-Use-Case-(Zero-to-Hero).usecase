@@ -1,5 +1,6 @@
 {
   "Identifier": "d946307f-ed51-481e-9435-cf2892389553",
+  "Order": 0,
   "CreationTimeInUnixtime": "1578817245384",
   "Name": "Phishing Use Case (Zero to Hero)",
   "Description": "This use case will help you run your first incident response process with Siemplify and get into the basics of customizing a playbook.",
