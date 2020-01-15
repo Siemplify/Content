@@ -4,7 +4,7 @@
   "CreationTimeInUnixtime": "1578817245384",
   "Name": "Phishing Use Case (Zero to Hero)",
   "Description": "This use case will help you run your first incident response process with Siemplify and get into the basics of customizing a playbook.",
-  "VideoLink": null,
+  "VideoLink": "https://fast.wistia.net/embed/iframe/z9ki4jaefd",
   "UpdaterFullName": "Shaked Tal",
   "UpdaterEmail": "shakedt@siemplify.co",
   "UpdaterImageBase64": null,
