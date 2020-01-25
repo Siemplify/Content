@@ -41,7 +41,7 @@
     "EventName": "Phishing email box",
     "SecurityEventFieldName": "SourceUserName",
     "TransformationFunction": 15,
-    "TransformationFunctionParam": "From.*<([a-zA-Z0-9-_.+]+@[a-zA-Z0-9-_.]+)>",
+    "TransformationFunctionParam": "From:[\w\s\d_.+-]+<([a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+)>",
     "RawDataPrimaryFieldMatchTerm": "body",
     "RawDataPrimaryFieldComparisonType": 0,
     "RawDataSecondaryFieldMatchTerm": null,
