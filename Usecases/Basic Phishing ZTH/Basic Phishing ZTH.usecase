@@ -2,7 +2,7 @@
   "Identifier": "e32aec45-97d8-45d7-9439-d9a8133b22ef",
   "CreationTimeInUnixtime": "1579937225849",
   "Order": 0,
-  "Name": "Basic Phishing - Zero to Hero",
+  "Name": "Basic Phishing ZTH",
   "Description": "This use case will help you run your first incident response process with Siemplify and get into the basics of customizing a playbook.\n",
   "VideoLink": null,
   "UpdaterFullName": "Alon Cohen",
