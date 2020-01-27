@@ -14,7 +14,7 @@
           "_rawDataFields": {
             "sourcetype": "Email",
             "EventId": "220",
-            "Name": "Suspicious phishing email",
+            "Name": "Suspicious Email",
             "Severity": "High",
             "CategoryOutcome": "allowed",
             "sentTime": "1522059431000",
@@ -33,7 +33,7 @@
       "Description": null,
       "DisplayId": null,
       "Reason": null,
-      "Name": "Suspicious phishing email",
+      "Name": "Suspicious Email",
       "DeviceVendor": "Phishing Email Box",
       "DeviceProduct": "Phishing Email Box",
       "StartTime": 1579936788161,
