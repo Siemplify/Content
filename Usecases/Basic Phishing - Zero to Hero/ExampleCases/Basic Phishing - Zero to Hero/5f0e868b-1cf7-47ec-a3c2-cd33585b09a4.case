@@ -31,7 +31,7 @@
         }
       ],
       "Environment": null,
-      "SourceSystemName": "Email",
+      "SourceSystemName": "EmailV2",
       "TicketId": null,
       "Description": null,
       "DisplayId": null,
