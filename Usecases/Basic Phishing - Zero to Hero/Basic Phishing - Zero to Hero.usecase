@@ -30,9 +30,14 @@
     {
       "Identifier": "UrlScanIo",
       "Version": 3.0
+    },
+    {
+      "Identifier": "EmailV2",
+      "Version": 1.0
     }
   ],
   "Integrations": [
+    "EmailV2",
     "Siemplify",
     "Slack",
     "VirusTotal",
