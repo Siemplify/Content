@@ -38,7 +38,9 @@
     "VirusTotal",
     "UrlScanIo"
   ],
-  "Connectors": [],
+  "Connectors": [
+    "Generic IMAP Email Connector"
+  ],
   "TestCases": [
     {
       "CaseTitle": "Suspicious Email - Zero to Hero"
