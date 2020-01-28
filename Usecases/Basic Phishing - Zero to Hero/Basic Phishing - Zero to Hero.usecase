@@ -3,7 +3,7 @@
   "CreationTimeInUnixtime": "1579937225849",
   "Order": 0,
   "Name": "Basic Phishing - Zero to Hero",
-  "Description": "This use case will help you run your first incident response process with Siemplify and get into the basics of customizing a playbook.\n",
+  "Description": "This use case will help you run your first incident response process with Siemplify and get into the basics of customizing a playbook.\n\nExtra Help - \nQuickStart Guides: https://www.manula.com/manuals/siemplify/quick-start-guide/5.3.0/en/topic/ingest-your-first-case",
   "VideoLink": null,
   "UpdaterFullName": "Alon Cohen",
   "UpdaterEmail": "alon@siemplify.co",
