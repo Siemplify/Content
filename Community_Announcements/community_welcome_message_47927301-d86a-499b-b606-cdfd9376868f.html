@@ -177,7 +177,7 @@
 
     .first-stage .logo {
         height: 55px;
-        margin-bottom: 30px;
+        margin-bottom: 20px;
     }
 
     .first-stage .logo span {
@@ -186,18 +186,17 @@
     }
 
     .first-stage__text {
-        padding-left: 406px;
-        padding-top: 105px;
-        max-width: 515px;
+        padding-left: 390px;
+        padding-top: 85px;
     }
 
     .first-stage .paragraph:not(:last-child) {
-        margin-bottom: 35px;
+        margin-bottom: 30px;
     }
 
     .first-stage__text .title {
-        font-size: 18px;
-        font-weight: 600;
+        font-size: 20px;
+        font-weight: normal;
         margin-bottom: 12px;
         color: #F4F5FA;
     }
@@ -206,6 +205,7 @@
         font-size: 13px;
         line-height: 1.8;
         color: #D3D8EA;
+        margin-bottom: 12px;
     }
 
     .box-stage {
@@ -262,6 +262,46 @@
     .box-stage .profiles {
         display: flex;
         align-items: center;
+    }
+
+    .paragraph-started-container {
+        display: flex;
+        align-items: flex-start;
+    }
+
+    .paragraph-started:first-child {
+        width: 240px;
+        margin-right: 70px;
+    }
+
+    .paragraph-started:last-child {
+        width: 250px;
+    }
+
+    .paragraph-started .quick-start-icon {
+        background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACIAAAAiCAYAAAA6RwvCAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAHISURBVHgB7VbRccIwDFV6/JcRskHZoGGCthOUTgAbkE6QMgHdoHSCphPABvEGpBO4T2flTiQOcWmAn7w74RBLz8+2LIdowIABA/yw1i5gBWwLS9v8IgoESBI0y0D3pyiKSsTEeC5qfVP05fWAEQWCg0FsA1x/WIQ8J57+e1hOpwoRMd9tfdA4RhPDxvwsYozH1Wh/+O2oDzAh7z1sbw/BOfEMW0ofWyYxseQNY8HvRopwwrMJGNtgFqYiRPNFbiXqYL53civwgpiNxCRo1ipmzz+REpIFCvlUpIUizGFvsFLaiSe2rI2RguuV/gNeQbUNS/U+sd3gbZprvuDj2yJmhuYWs1qpd1tqrgb7xfJsyK1qSecCC/PMPqj2RC2EMYWh1DOr5QzDkCtgpouorY6sKQy8JVXizqh5etIQEb2hVhd0QoacwpMHXHOhkv9jyYt9y+koKt++hWT2OHjguW2uTkp9AoSPR2b/obdCVkoLyo5xRxLE537SoYNPyMa6E5XA7shVSb60dr4L0TavAO8ngBaSkLueu4Ss6I+wh98kOTimdC1IgleI6Vqwh/ePN1du6AKQvMjl73lqSyisq0EP9lxFbsCAS+EX9ULvCzZlIkEAAAAASUVORK5CYII=') no-repeat;
+        width: 34px;
+        height: 34px;
+    }
+
+    .paragraph-started .from-zero-icon {
+        background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACIAAAAiCAYAAAA6RwvCAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAGzSURBVHgB7ZbhUcJAEIVfGP5LB1wHQgViBWIFQgVqBVKCViAdgBUYKwAr8KwArADfwma4OWLujuSPM/lmdi657N2+ud1sArS0tPxTshin3W434vCKdLa0aZZl65BjrJAVhx4tRxojEUMhQzQBhXzRkk9E1sjaGN+Ot3BMW2hgMWGAmnAPQ9vonivau8RyfbqOsxz9gmZxTIGV/PIZaiK18kwzOKRYRjmtnPtvy1QLN/4uTadGil9j9Yu5jqcaqjgl2IR2hzSMjj/whThHlCSE3NMmSOPCi3msEWUbEqK1ZNQuaQOdn3GQfiGva45qejhm4E8hBmEeaH46nnScU9T6pAgDQjo4FVKJBKBNeDkreTzjs2lARCHEhoQYxPFWMjdHHMaf8IVYxBdr0ehy2lKvR4jHujfdEodYIVL5t0zDXoS8xog/TfFbVwmxsUIo4MW7nyOeqGJN7SPnEBSy73Ru620a7UNARB8RrrmgOJ0lmgk+xiH1RqdtlZBcHdwP3Ab1ufL2lK/6h+tw8ocmX2EOfWfBt/OHZpHGQPcYarqNzn/6TS/2V9Hg/H/WRwa1aGlpaZhfHSzg3Mpp/EQAAAAASUVORK5CYII=') no-repeat;
+        width: 34px;
+        height: 34px;
+    }
+
+    .paragraph-started .title {
+        display: flex;
+        align-items: center;
+        font-size: 14px;
+    }
+
+    .paragraph-started .icon {
+        margin-right: 12px;
+    }
+
+    .paragraph-started .link {
+        font-size: 14px;
     }
 
     .person__profile {
@@ -394,11 +434,14 @@
     }
 
     .contact-stage .first-stage__text {
-        max-width: 400px;
+        max-width: 540px;
+        padding-left: 410px;
+        padding-top: 165px;
     }
 
     .contact-stage .content {
-        font-size: 14px;
+        font-size: 16px;
+        font-weight: 600;
         line-height: 1.8;
         margin: 10px 0 20px;
     }
@@ -409,13 +452,13 @@
     }
 
     .contact-stage .logo {
-        height: 35px;
-        background-size: 40%;
+        height: 45px;
+        background-size: 34%;
     }
 
     .contact-stage .logo span {
         font-size: 14px;
-        padding-left: 172px;
+        padding-left: 195px;
     }
 
     .carousel__controls,
@@ -651,22 +694,36 @@
                     </div>
 
                     <div class="paragraph">
-                        <div class="title">Welcome to Siemplify Community</div>
-                        <div class="description">
-                            The community allows it's members to connect, collaborate, share best practices and engage
-                            in
-                            different discussions related to Siemplify's product and cyber in general.
-                        </div>
+                        <div class="title">Welcome to Siemplify! Get Started with our Onboarding Kit</div>
                     </div>
 
-                    <div class="paragraph">
-                        <div class="title">Siemplify’s Community Edition</div>
-                        <div class="description">
-                            This is a free product through which support is provided in our online community and
-                            dedicated slack
-                            channel. Once you have downloaded Siemplify and the platfrom is up and running use the below
-                            onboarding kit to help you get started.
+                    <div class="paragraph-started-container">
+
+                        <div class="paragraph paragraph-started">
+                            <div class="title">
+                                <div class="icon quick-start-icon"></div>
+                                Quick Start Guide
+                            </div>
+                            <div class="description">
+                                New to Siemplify? The Quick Start Guide has been designed to help you, the new user,
+                                navigate your way round the Siemplify platform as quickly and efficiently as possible.
+                            </div>
+                            <a href="https://www.manula.com/manuals/siemplify/quick-start-guide/5.3.0/en/topic/start-working-in-siemplify" class="link" target="_blank">Get Started</a>
                         </div>
+
+                        <div class="paragraph paragraph-started">
+                            <div class="title">
+                                <div class="icon from-zero-icon"></div>
+                                Run a Use Case
+                            </div>
+                            <div class="description">
+                                In this Community Edition you gain access to a repository of use cases that will help
+                                you get a head start with Siemplify. The repository is updated continuously by Siemplify
+                                teams and other community members like yourself.
+                            </div>
+                            <a href="https://www.manula.com/manuals/siemplify/quick-start-guide/5.3.0/en/topic/use-cases" class="link" target="_blank">Get Started</a>
+                        </div>
+
                     </div>
 
                 </div>
@@ -683,7 +740,8 @@
                     <div class="description-title">Documentation & Community Support</div>
 
                     <div class="description">
-                        Documentation, on-boarding material and a dedicated support channel are provided throughout your journey with Siemplify Community Edition.
+                        Documentation, on-boarding material and a dedicated support channel are provided throughout your
+                        journey with Siemplify Community Edition.
                     </div>
 
                     <div class="doc-squares">
