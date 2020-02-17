@@ -1,7 +1,7 @@
 {
   "Identifier": "555a9d5f-a641-4fad-b084-569ebe4aca61",
   "CreationTimeInUnixtime": "1581587120757",
-  "Order": 0,
+  "Order": 1,
   "Name": "EDR Alert",
   "Description": "Basic playbook for handling an EDR alert detecting a potential malicious process. Requires configuring multiple cloud integrations.",
   "VideoLink": null,
