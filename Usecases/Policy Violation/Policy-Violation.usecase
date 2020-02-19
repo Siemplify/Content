@@ -3,7 +3,7 @@
   "CreationTimeInUnixtime": "1582074530896",
   "Order": 0,
   "Name": "Policy Violation",
-  "Description": "A multi-purpose playbook to handle policy violations and communication with the user and management.\nContains sample alerts for use case demonstration.",
+  "Description": "A multi-purpose playbook to handle policy violations and communication with the user and management.\nContains sample alerts for use case demonstration, a playbook and a reusable block.",
   "VideoLink": null,
   "UpdaterFullName": "Steven Goossens",
   "UpdaterEmail": "steven@teamg.be",
