@@ -1,7 +1,7 @@
 {
   "Identifier": "957b9450-9421-47de-8d2f-09d937d62f12",
   "CreationTimeInUnixtime": "1582062481380",
-  "Order": 0,
+  "Order": 1,
   "Name": "IOC Match Investigation",
   "Description": "This use case adds multiple simulation alerts and a playbook that investigations multiple possible IOC matches.",
   "VideoLink": null,

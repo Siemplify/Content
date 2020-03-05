@@ -1,7 +1,7 @@
 {
   "Identifier": "08158455-8c1c-4638-9deb-75ffdeac759b",
   "CreationTimeInUnixtime": "1581885183190",
-  "Order": 0,
+  "Order": 1,
   "Name": "Service \\ Process Execution",
   "Description": "Basic playbook for investigating a suspicious service \\ process execution on endpoint. Requires configuring multiple cloud integrations.\n",
   "VideoLink": null,
