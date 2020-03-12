@@ -1,0 +1,47 @@
+{
+  "Identifier": "b66d2e3f-3a08-44ce-ac2b-569618160279",
+  "CreationTimeInUnixtime": "1584023299855",
+  "Order": 0,
+  "Name": "Test Use Case - ",
+  "Description": "This is a TestUse case 5.5.0",
+  "VideoLink": "https://youtu.be/mW9UC3S6e7I?t=12",
+  "UpdaterFullName": "Moshiko Elimelech",
+  "UpdaterEmail": "Siemplify@siemplify.co",
+  "UpdaterImageBase64": null,
+  "Category": "Test",
+  "Tags": [],
+  "CategorySvgImage": null,
+  "Playbooks": [
+    "yyyy"
+  ],
+  "CommercialIntegrations": [
+    {
+      "Identifier": "Splunk",
+      "Version": 14.0
+    },
+    {
+      "Identifier": "Siemplify",
+      "Version": 33.0
+    },
+    {
+      "Identifier": "PaloAltoCortexXDR",
+      "Version": 4.0
+    },
+    {
+      "Identifier": "MicrosoftAzureSentinel",
+      "Version": 2.0
+    }
+  ],
+  "Integrations": [
+    "Splunk",
+    "Siemplify",
+    "PaloAltoCortexXDR",
+    "MicrosoftAzureSentinel"
+  ],
+  "Connectors": [
+    "Splunk Connector",
+    "Palo Alto Cortex XDR Connector",
+    "Microsoft Azure Sentinel Incident Connector"
+  ],
+  "TestCases": []
+}

@@ -1,0 +1,50 @@
+{
+  "Identifier": "9bc65692-f753-43d1-8122-2f5ff283a740",
+  "CreationTimeInUnixtime": "1584023712159",
+  "Order": 0,
+  "Name": "Use case test",
+  "Description": "**** This is test to use case from 5.3.3",
+  "VideoLink": "https://youtu.be/mW9UC3S6e7I",
+  "UpdaterFullName": "Moshe Elimelech",
+  "UpdaterEmail": "siemplify@siemplify.co",
+  "UpdaterImageBase64": null,
+  "Category": "test",
+  "Tags": [],
+  "CategorySvgImage": null,
+  "Playbooks": [
+    "Test"
+  ],
+  "CommercialIntegrations": [
+    {
+      "Identifier": "AzureActiveDirectory",
+      "Version": 1.0
+    },
+    {
+      "Identifier": "Office365CloudAppSecurity",
+      "Version": 2.0
+    },
+    {
+      "Identifier": "RecordedFuture",
+      "Version": 2.0
+    },
+    {
+      "Identifier": "AlienVaultAnywhere",
+      "Version": 11.0
+    }
+  ],
+  "Integrations": [
+    "AzureActiveDirectory",
+    "Office365CloudAppSecurity",
+    "RecordedFuture",
+    "AlienVaultAnywhere"
+  ],
+  "Connectors": [
+    "Office 365 CloudApp Security Connector",
+    "AlienVault USM Anywhere Connector"
+  ],
+  "TestCases": [
+    {
+      "CaseTitle": "test use case"
+    }
+  ]
+}
