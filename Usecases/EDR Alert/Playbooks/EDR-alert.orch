@@ -10,6 +10,8 @@
   "Description": "Handling an EDR alert",
   "Environment": "",
   "Category": "Default",
+  "CategoryName": "Default", 
+  "CategoryId": 1,
   "CreationTime": "2020-02-11T18:54:32.295Z",
   "ModificationTime": "2020-02-12T20:07:54.084Z",
   "OriginalPlaybookIdentifier": "4a2b6ffe-5cd9-42de-9d06-f7232082b101",

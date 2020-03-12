@@ -10,6 +10,8 @@
   "Description": "",
   "Environment": "",
   "Category": "Default",
+  "CategoryName": "Default",
+  "CategoryId": 1,
   "CreationTime": "2020-02-16T13:28:14.596Z",
   "ModificationTime": "2020-02-16T20:12:47.68Z",
   "OriginalPlaybookIdentifier": "7bda8966-53a6-473c-92df-9ee1a7cd72f1",

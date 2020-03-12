@@ -10,6 +10,8 @@
   "Description": "An embedded workflow that can receive inputs and return an output.",
   "Environment": "*",
   "Category": "Default",
+  "CategoryName": "Default",
+  "CategoryId": 1,
   "CreationTime": "2020-02-19T00:17:35.765Z",
   "ModificationTime": "2020-02-19T01:03:46.054Z",
   "OriginalPlaybookIdentifier": "ad830c6e-0f9e-4a50-af5a-08737bcaaf28",
